@@ -65,14 +65,14 @@ public class Player : MonoBehaviour {
 
     private void HandleMovement()
     {
-        if ((Input.GetAxis("Rotate_X_P1") !=0)  || ((Input.GetAxis("Rotate_Y_P1")) != 0))
+        if ((Input.GetAxis("Rotate_X_P" + playerNumber.ToString()) !=0)  || ((Input.GetAxis("Rotate_Y_P" + playerNumber.ToString())) != 0))
         {
             //Rotate the player based on the controller
-            float rotation = Mathf.Rad2Deg * Mathf.Atan2(Input.GetAxis("Rotate_X_P1"), Input.GetAxis("Rotate_Y_P1"));
+            float rotation = Mathf.Rad2Deg * Mathf.Atan2(Input.GetAxis("Rotate_X_P" + playerNumber.ToString()), Input.GetAxis("Rotate_Y_P" + playerNumber.ToString()));
             transform.localRotation = Quaternion.Euler(new Vector3(0, rotation, 0));
         }
         //Handle player jumping
-        if(Input.GetAxis("Jump_P1") > 0)
+        if(Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
         {
             GetComponent<Rigidbody>().AddForce(new Vector3(0, 20, 0));
             GetComponent<Rigidbody>().AddForce(transform.forward * 10);
