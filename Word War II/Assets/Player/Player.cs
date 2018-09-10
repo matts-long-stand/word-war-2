@@ -13,7 +13,8 @@ public class Player : MonoBehaviour {
 
     public InputType inputType;
     public int playerNumber;
-    string currentWord = "a";
+    string currentWord = "";
+    int correctLetters = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -90,7 +91,18 @@ public class Player : MonoBehaviour {
         //We only want to handle collision on the keyboard layer (keys)
         if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
-            Debug.Log("Collision on " + collision.gameObject.name);
+            //Check if we got the next letter
+            if(ScoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0])) {
+                currentWord += collision.gameObject.name.ToLower();
+                correctLetters++;
+            }
+
+            //Check if we completed the word
+            if(ScoreTracker.currentGoal.Equals(currentWord))
+            {
+                currentWord = "";
+                correctLetters = 0;
+            }
         }
     }
 }

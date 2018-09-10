@@ -9,7 +9,7 @@ public class ScoreTracker : MonoBehaviour {
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
     List<Player> playerComponents = new List<Player>();
-    string currentGoal = "Word";
+    public static string currentGoal = "word";
 
     // Use this for initialization
 	void Start () {
