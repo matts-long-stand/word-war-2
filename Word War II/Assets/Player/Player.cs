@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
 
     public InputType inputType;
     public int playerNumber;
+    string currentWord = "a";
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,11 @@ public class Player : MonoBehaviour {
         }
 	}
 	
+    public string getCurrentWord()
+    {
+        return currentWord;
+    }
+
 	// Update is called once per frame
 	void Update () {
 
