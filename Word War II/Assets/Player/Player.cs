@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
         //Handle player jumping
         if(Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
         {
-            GetComponent<Rigidbody>().AddForce(new Vector3(0, 20, 0));
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, 100, 0));
             GetComponent<Rigidbody>().AddForce(transform.forward * 10);
         }
     }
