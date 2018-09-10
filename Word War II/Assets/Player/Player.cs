@@ -78,4 +78,13 @@ public class Player : MonoBehaviour {
             GetComponent<Rigidbody>().AddForce(transform.forward * 10);
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        //We only want to handle collision on the keyboard layer (keys)
+        if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
+        {
+            Debug.Log("Collision on " + collision.gameObject.name);
+        }
+    }
 }
