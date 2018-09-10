@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
+    public string owner;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +16,7 @@ public class PowerUp : MonoBehaviour {
 		
 	}
 
-    public void ApplyPowerUp()
+    public virtual void ApplyPowerUp()
     {
 
     }

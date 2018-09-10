@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.PowerUps;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour {
     public int playerNumber;
     string currentWord = "";
     int correctLetters = 0;
+    List<PowerUp> activePowerups = new List<PowerUp>();
+    public bool frozen = false;
 
 	// Use this for initialization
 	void Start () {
@@ -32,11 +35,14 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //Handle any player input
-        HandleInput();
+        if(!frozen)
+        {
+            //Handle any player input
+            HandleInput();
 
-        //Handle player movement based off of input
-        HandleMovement();
+            //Handle player movement based off of input
+            HandleMovement();
+        }
 	}
 
     private void HandleInput()
@@ -102,6 +108,25 @@ public class Player : MonoBehaviour {
             {
                 currentWord = "";
                 correctLetters = 0;
+            }
+        }
+
+        //Handle powerup collisions
+        else if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Powerup"))
+        {
+            collision.collider.gameObject.transform.parent.GetComponent<PowerUp>().owner = gameObject.transform.parent.name;
+            activePowerups.Add(collision.collider.gameObject.transform.parent.GetComponent<PowerUp>());
+            collision.collider.gameObject.transform.parent.GetComponent<PowerUp>().ApplyPowerUp();
+            Destroy(collision.collider.gameObject.GetComponentInChildren<MeshRenderer>().gameObject);
+        }
+
+        else if(collision.collider.gameObject.tag.Equals("Player"))
+        {
+            foreach(PowerUp powerUp in activePowerups) {
+                if(powerUp is ExtraBouncePowerup)
+                {
+                    collision.collider.attachedRigidbody.AddForce(transform.forward * 2500);
+                }
             }
         }
     }
