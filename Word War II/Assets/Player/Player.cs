@@ -118,6 +118,10 @@ public class Player : MonoBehaviour {
             activePowerups.Add(collision.collider.gameObject.transform.parent.GetComponent<PowerUp>());
             collision.collider.gameObject.transform.parent.GetComponent<PowerUp>().ApplyPowerUp();
             Destroy(collision.collider.gameObject.GetComponentInChildren<MeshRenderer>().gameObject);
+            Behaviour halo1 = collision.collider.gameObject.GetComponent("Halo") as Behaviour;
+            //gameObject.AddComponent(halo1);
+            Behaviour halo = GetComponentInChildren<SphereCollider>().gameObject.GetComponent("Halo") as Behaviour;
+            halo.enabled = true;
         }
 
         else if(collision.collider.gameObject.tag.Equals("Player"))
