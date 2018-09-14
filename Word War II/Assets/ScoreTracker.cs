@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreTracker : MonoBehaviour {
     public TextMeshProUGUI instructions;
     public TextMeshProUGUI goal;
     public TextMeshProUGUI[] playerProgress;
 
+    //When a winner is decided
+    public TextMeshProUGUI winScreen;
+    string winner = "";
+
     bool started = false;
 
-    public int winScore = 5;
+    [System.NonSerialized]
+    public int winScore = 2;
 
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
@@ -30,6 +36,7 @@ public class ScoreTracker : MonoBehaviour {
 
         instructions.gameObject.SetActive(true);
         goal.gameObject.SetActive(false);
+        winScreen.gameObject.SetActive(false);
         foreach (TextMeshProUGUI eachProgress in playerProgress)
         {
             eachProgress.gameObject.SetActive(false);
@@ -68,13 +75,37 @@ public class ScoreTracker : MonoBehaviour {
         }
         else
         {
-            goal.text = "Current goal: " + currentGoal + "\n";
-
-            for (int i = 0; i < playerProgress.Length; i++)
+            if (winner == "")
             {
-                playerProgress[i].text = "<color=\"" + playerColors[i] + "\"" + ">" + players[i].PlayerProgressString() + "</color>\n";
+                goal.text = "Current goal: " + currentGoal + "\n";
+
+                for (int i = 0; i < playerProgress.Length; i++)
+                {
+                    playerProgress[i].text = "<color=\"" + playerColors[i] + "\"" + ">" + players[i].PlayerProgressString() + "</color>\n";
+                }
+            } else
+            {
+                if (Input.anyKeyDown)
+                {
+                    SceneManager.LoadScene("Long");
+                }
+
             }
         }
         //Display.text = result;
 	}
+
+    public void Winner(Player playerWon)
+    {
+        winner = "Player " + playerWon.playerNumber;
+
+        goal.gameObject.SetActive(false);
+        foreach (TextMeshProUGUI eachProgress in playerProgress)
+        {
+            eachProgress.gameObject.SetActive(false);
+        }
+
+        winScreen.text = winner + " won!\nPress any key to restart game";
+        winScreen.gameObject.SetActive(true);
+    }
 }

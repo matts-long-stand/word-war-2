@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     //For score tracking
     string currentWord = "";
     int correctLetters = 0;
-    int currentScore = 0;
+    public int currentScore = 0;
 
     // Use this for initialization
     void Start()
@@ -170,7 +170,13 @@ public class Player : MonoBehaviour
                 currentWord = "";
                 correctLetters = 0;
                 currentScore += 1;
-                scoreTracker.RandomizeWord();
+                if (currentScore < scoreTracker.winScore)
+                {
+                    scoreTracker.RandomizeWord();
+                } else
+                {
+                    scoreTracker.Winner(this);
+                }
             }
         }
 
