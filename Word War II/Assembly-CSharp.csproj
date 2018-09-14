@@ -53,7 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Laptop\Key.cs" />
      <Compile Include="Assets\Player\Player.cs" />
+     <Compile Include="Assets\PowerUps\ExtraBouncePowerup.cs" />
+     <Compile Include="Assets\PowerUps\FreezeOpponentPowerup.cs" />
+     <Compile Include="Assets\PowerUps\PowerUp.cs" />
      <Compile Include="Assets\ScoreTracker.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
