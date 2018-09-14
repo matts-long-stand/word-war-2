@@ -20,11 +20,11 @@ public class Player : MonoBehaviour
     List<GameObject> currentColliders = new List<GameObject>();
     List<PowerUp> activePowerups = new List<PowerUp>();
     public bool frozen = false;
-    float initialForce = 500;
-    float forceAdded = 0;
-    float capForce = 1000;
-    float forceInterval = 100;
-    bool jumpedOnObject = false;
+    float initialForce = 600;
+    float forceInterval = 35;
+    int jumpSteps = 0;
+    int maxJumpSteps = 15;
+
     // Use this for initialization
     void Start()
     {
@@ -84,12 +84,6 @@ public class Player : MonoBehaviour
 
     }
 
-    void CanBounceAgain()
-    {
-        forceAdded = 0;
-
-    }
-
     private void HandleMovement()
     {
         if ((Input.GetAxis("Rotate_X_P" + playerNumber.ToString()) != 0) || ((Input.GetAxis("Rotate_Y_P" + playerNumber.ToString())) != 0))
@@ -103,39 +97,27 @@ public class Player : MonoBehaviour
         Vector3 velocity = GetComponent<Rigidbody>().velocity;
         if (Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
         {
-            if (currentColliders.Count > 0)
+            Debug.Log(currentColliders.Count + " colliders");
+            if ((jumpSteps == 0) && (currentColliders.Count > 0))
             {
-                jumpedOnObject = true;
+                GetComponent<Rigidbody>().AddForce(new Vector3(0, initialForce, 0));
+                Debug.Log("Applied " + initialForce);
+                GetComponent<Rigidbody>().AddForce(transform.forward * 50);
+                jumpSteps++;
+            }
+            else if ((jumpSteps > 0) && (jumpSteps < maxJumpSteps) && (currentColliders.Count == 0))
+            {
+                GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
+                Debug.Log("Applied " + forceInterval);
+                GetComponent<Rigidbody>().AddForce(transform.forward * 5);
+                jumpSteps++;
             }
 
-            //Debug.Log(velocity.x + " " + velocity.y + " " + velocity.z);
-            Debug.Log(Input.GetAxis("Jump_P" + playerNumber.ToString()));
             //if (transform.localPosition.y <= (GetComponent<MeshRenderer>().bounds.extents.y/2))
-            if (jumpedOnObject)
-            {
-                if (forceAdded == 0)
-                {
-                    GetComponent<Rigidbody>().AddForce(new Vector3(0, initialForce, 0));
-                    Debug.Log("Applied " + initialForce);
-                    forceAdded += forceInterval;
-                    GetComponent<Rigidbody>().AddForce(transform.forward * 10);
-                }
-                else if (forceAdded > 0)
-                {
-                    if ((forceAdded + initialForce) < capForce)
-                    {
-                        GetComponent<Rigidbody>().AddForce(new Vector3(0, forceAdded, 0));
-                        Debug.Log("Applied " + forceAdded);
-                        forceAdded += forceInterval;
-                        GetComponent<Rigidbody>().AddForce(transform.forward * 10);
-                    }
-                }
-            }
         }
-
-        if ((velocity.y == 0) && (currentColliders.Count > 0))
+        else
         {
-            CanBounceAgain();
+            jumpSteps = 0;
         }
 
     }
@@ -147,15 +129,15 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
+        if (!currentColliders.Contains(collision.gameObject))
+        {
+            currentColliders.Add(collision.gameObject);
+        }
 
         //We only want to handle collision on the keyboard layer (keys)
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
-            currentColliders.Add(collision.gameObject);
-            jumpedOnObject = false;
-            //Reset the ability to jump
-            CanBounceAgain();
+
 
             //Check if we got the next letter
             if (ScoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0]))
