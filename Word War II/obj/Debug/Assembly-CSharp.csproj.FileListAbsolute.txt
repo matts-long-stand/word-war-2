@@ -333,7 +333,6 @@ C:\Users\Matt\Documents\word-war-2\Word War II\Temp\bin\Debug\UnityEngine.Networ
 C:\Users\Matt\Documents\word-war-2\Word War II\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 C:\Users\Matt\Documents\word-war-2\Word War II\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\Matt\Documents\word-war-2\Word War II\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
-C:\Users\Matt\Documents\word-war-2\Word War II\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 C:\Users\Matt\Documents\word-war-2\Word War II\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\Matt\Documents\word-war-2\Word War II\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\Matt\Documents\word-war-2\Word War II\obj\Debug\Assembly-CSharp.dll
