@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System;
 using UnityEngine;
 using System.Collections;
 
@@ -11,7 +10,11 @@ namespace Assets.PowerUps
     class FreezeOpponentPowerup : PowerUp
     {
         Player[] players = null;
-        float startTime;
+
+        void Start()
+        {
+            GetComponentInChildren<Rigidbody>().AddTorque(transform.forward * 100);
+        }
 
         public override void ApplyPowerUp()
         {
@@ -19,7 +22,7 @@ namespace Assets.PowerUps
 
             players = FindObjectsOfType<Player>();
             foreach(Player player in players) {
-                if(player.name != owner)
+                if(player.name != owner.name)
                 {
                     player.frozen = true;
                 }
@@ -40,11 +43,13 @@ namespace Assets.PowerUps
 
             foreach (Player player in players)
             {
-                if (player.name != owner)
+                if (player.name != owner.name)
                 {
                     player.frozen = false;
                 }
             }
+
+            owner.RemovePowerUp(this);
         }
     }
 }

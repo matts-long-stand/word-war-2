@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!frozen)
         {
             //Handle any player input
@@ -56,6 +55,20 @@ public class Player : MonoBehaviour
 
             //Handle player movement based off of input
             HandleMovement();
+        }
+
+        EnableHalo();
+    }
+
+    private void EnableHalo()
+    {
+        Behaviour halo = GetComponentInChildren<SphereCollider>().gameObject.GetComponent("Halo") as Behaviour;
+        if (activePowerups.Count > 0)
+        {
+            halo.enabled = true;
+        } else
+        {
+            halo.enabled = false;
         }
     }
 
@@ -103,18 +116,17 @@ public class Player : MonoBehaviour
         Vector3 velocity = GetComponent<Rigidbody>().velocity;
         if (Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
         {
-            Debug.Log(currentColliders.Count + " colliders");
             if ((jumpSteps == 0) && (currentColliders.Count > 0))
             {
                 GetComponent<Rigidbody>().AddForce(new Vector3(0, initialForce, 0));
-                Debug.Log("Applied " + initialForce);
+                //Debug.Log("Applied " + initialForce);
                 GetComponent<Rigidbody>().AddForce(transform.forward * 50);
                 jumpSteps++;
             }
             else if ((jumpSteps > 0) && (jumpSteps < maxJumpSteps) && (currentColliders.Count == 0))
             {
                 GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
-                Debug.Log("Applied " + forceInterval);
+                //Debug.Log("Applied " + forceInterval);
                 GetComponent<Rigidbody>().AddForce(transform.forward * 5);
                 jumpSteps++;
             }
@@ -165,14 +177,17 @@ public class Player : MonoBehaviour
         //Handle powerup collisions
         else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Powerup"))
         {
-            collision.collider.gameObject.transform.parent.GetComponent<PowerUp>().owner = gameObject.name;
-            activePowerups.Add(collision.collider.gameObject.transform.parent.GetComponent<PowerUp>());
-            collision.collider.gameObject.transform.parent.GetComponent<PowerUp>().ApplyPowerUp();
-            Destroy(collision.collider.gameObject.GetComponentInChildren<MeshRenderer>().gameObject);
+            currentColliders.Remove(collision.gameObject);
+
+            PowerUp powerUpComponent = collision.collider.gameObject.transform.parent.GetComponent<PowerUp>();
+
+            powerUpComponent.owner = this;
+            activePowerups.Add(powerUpComponent);
+            powerUpComponent.ApplyPowerUp();
+            Destroy(powerUpComponent.GetComponentInChildren<MeshRenderer>().gameObject);
             Behaviour halo1 = collision.collider.gameObject.GetComponent("Halo") as Behaviour;
             //gameObject.AddComponent(halo1);
-            Behaviour halo = GetComponentInChildren<SphereCollider>().gameObject.GetComponent("Halo") as Behaviour;
-            halo.enabled = true;
+
         }
 
         else if (collision.collider.gameObject.tag.Equals("Player"))
@@ -185,6 +200,11 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RemovePowerUp(PowerUp powerUp)
+    {
+        activePowerups.Remove(powerUp);
     }
 
     public string PlayerProgressString()

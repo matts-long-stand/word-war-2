@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-    public string owner;
+    public Player owner;
+    protected float startTime;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

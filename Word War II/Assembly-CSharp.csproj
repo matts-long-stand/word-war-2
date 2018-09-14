@@ -55,10 +55,17 @@
   <ItemGroup>
      <Compile Include="Assets\Laptop\Key.cs" />
      <Compile Include="Assets\Player\Player.cs" />
-     <Compile Include="Assets\PowerUps\ExtraBouncePowerup.cs" />
-     <Compile Include="Assets\PowerUps\FreezeOpponentPowerup.cs" />
+     <Compile Include="Assets\PowerUps\Extra Bounce\ExtraBouncePowerup.cs" />
+     <Compile Include="Assets\PowerUps\Freeze Opponent\FreezeOpponentPowerup.cs" />
      <Compile Include="Assets\PowerUps\PowerUp.cs" />
      <Compile Include="Assets\ScoreTracker.cs" />
+     <Compile Include="Assets\Spawn\ISpawner.cs" />
+     <Compile Include="Assets\Spawn\ISpawnLocation.cs" />
+     <Compile Include="Assets\Spawn\Player Spawn\PlayerSpawner.cs" />
+     <Compile Include="Assets\Spawn\Player Spawn\PlayerSpawnLocation.cs" />
+     <Compile Include="Assets\Spawn\Power Up Spawn\PowerUpSpawner.cs" />
+     <Compile Include="Assets\Spawn\Power Up Spawn\PowerUpSpawnLocation.cs" />
+     <Compile Include="Assets\Spawn\SpawnLocation.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

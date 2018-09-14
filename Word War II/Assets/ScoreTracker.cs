@@ -4,14 +4,17 @@ using UnityEngine;
 using TMPro;
 
 public class ScoreTracker : MonoBehaviour {
+    public TextMeshProUGUI instructions;
     public TextMeshProUGUI goal;
     public TextMeshProUGUI[] playerProgress;
+
+    bool started = false;
 
     public int winScore = 5;
 
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
-    public Player[] playerComponents;
+    public Player[] players;
     List<string> dictionary = new List<string>();
     public string currentGoal = "word";
 
@@ -19,16 +22,22 @@ public class ScoreTracker : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
-        //foreach (Player playerComponent in FindObjectsOfType<Player>())
-        //{
-        //    playerComponents.Add(playerComponent);
-        //}
-
         TextAsset text = Resources.Load<TextAsset>("Words");
         dictionary.AddRange(text.ToString().Split(null));
         Debug.Log("dictionary has " + dictionary.Count);
 
         RandomizeWord();
+
+        instructions.gameObject.SetActive(true);
+        goal.gameObject.SetActive(false);
+        foreach (TextMeshProUGUI eachProgress in playerProgress)
+        {
+            eachProgress.gameObject.SetActive(false);
+        }
+        foreach (Player eachPlayer in players)
+        {
+            eachPlayer.gameObject.SetActive(false);
+        }
     }
 	
     public void RandomizeWord()
@@ -37,15 +46,35 @@ public class ScoreTracker : MonoBehaviour {
         currentGoal = dictionary[wordIndex];
     }
 
-	// Update is called once per frame
-	void Update () {
-        goal.text = "Current goal: " + currentGoal + "\n";
-
-        for (int i = 0; i < playerProgress.Length; i++)
+    // Update is called once per frame
+    void Update() {
+        if (!started)
         {
-            playerProgress[i].text = "<color=\"" + playerColors[i] + "\"" + ">" + playerComponents[i].PlayerProgressString() + "</color>\n";
-        }
+            if (Input.anyKeyDown)
+            {
+                instructions.gameObject.SetActive(false);
+                goal.gameObject.SetActive(true);
+                foreach (TextMeshProUGUI eachProgress in playerProgress)
+                {
+                    eachProgress.gameObject.SetActive(true);
+                }
+                foreach (Player eachPlayer in players)
+                {
+                    eachPlayer.gameObject.SetActive(true);
+                }
 
+                started = true;
+            }
+        }
+        else
+        {
+            goal.text = "Current goal: " + currentGoal + "\n";
+
+            for (int i = 0; i < playerProgress.Length; i++)
+            {
+                playerProgress[i].text = "<color=\"" + playerColors[i] + "\"" + ">" + players[i].PlayerProgressString() + "</color>\n";
+            }
+        }
         //Display.text = result;
 	}
 }
