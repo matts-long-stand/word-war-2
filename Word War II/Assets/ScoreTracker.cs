@@ -4,31 +4,48 @@ using UnityEngine;
 using TMPro;
 
 public class ScoreTracker : MonoBehaviour {
-    public TextMeshProUGUI Display;
+    public TextMeshProUGUI goal;
+    public TextMeshProUGUI[] playerProgress;
+
+    public int winScore = 5;
 
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
-    List<Player> playerComponents = new List<Player>();
-    public static string currentGoal = "word";
+    public Player[] playerComponents;
+    List<string> dictionary = new List<string>();
+    public string currentGoal = "word";
+
+    System.Random rd = new System.Random();
 
     // Use this for initialization
 	void Start () {
-        foreach (Player playerComponent in FindObjectsOfType<Player>())
-        {
-            playerComponents.Add(playerComponent);
-        }
-	}
+        //foreach (Player playerComponent in FindObjectsOfType<Player>())
+        //{
+        //    playerComponents.Add(playerComponent);
+        //}
+
+        TextAsset text = Resources.Load<TextAsset>("Words");
+        dictionary.AddRange(text.ToString().Split(null));
+        Debug.Log("dictionary has " + dictionary.Count);
+
+        RandomizeWord();
+    }
 	
+    public void RandomizeWord()
+    {
+        int wordIndex = rd.Next(dictionary.Count);
+        currentGoal = dictionary[wordIndex];
+    }
+
 	// Update is called once per frame
 	void Update () {
-        string result = "Current goal: " + currentGoal + "\n";
+        goal.text = "Current goal: " + currentGoal + "\n";
 
-        foreach (Player playerComponent in playerComponents)
+        for (int i = 0; i < playerProgress.Length; i++)
         {
-            int index = playerComponents.IndexOf(playerComponent);
-            result += "<color=\"" + playerColors[index] + "\"" + ">Player " + index.ToString() + ": " + playerComponent.getCurrentWord() + "</color>\n";
+            playerProgress[i].text = "<color=\"" + playerColors[i] + "\"" + ">" + playerComponents[i].PlayerProgressString() + "</color>\n";
         }
 
-        Display.text = result;
+        //Display.text = result;
 	}
 }

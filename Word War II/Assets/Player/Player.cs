@@ -15,15 +15,21 @@ public class Player : MonoBehaviour
 
     public InputType inputType;
     public int playerNumber;
-    string currentWord = "";
-    int correctLetters = 0;
+
     List<GameObject> currentColliders = new List<GameObject>();
     List<PowerUp> activePowerups = new List<PowerUp>();
     public bool frozen = false;
+
+    //For movement
     float initialForce = 600;
     float forceInterval = 35;
     int jumpSteps = 0;
     int maxJumpSteps = 15;
+
+    //For score tracking
+    string currentWord = "";
+    int correctLetters = 0;
+    int currentScore = 0;
 
     // Use this for initialization
     void Start()
@@ -129,6 +135,8 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        ScoreTracker scoreTracker = FindObjectOfType<ScoreTracker>();
+
         if (!currentColliders.Contains(collision.gameObject))
         {
             currentColliders.Add(collision.gameObject);
@@ -137,20 +145,20 @@ public class Player : MonoBehaviour
         //We only want to handle collision on the keyboard layer (keys)
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
-
-
             //Check if we got the next letter
-            if (ScoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0]))
+            if (scoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0]))
             {
                 currentWord += collision.gameObject.name.ToLower();
                 correctLetters++;
             }
 
             //Check if we completed the word
-            if (ScoreTracker.currentGoal.Equals(currentWord))
+            if (scoreTracker.currentGoal.Equals(currentWord))
             {
                 currentWord = "";
                 correctLetters = 0;
+                currentScore += 1;
+                scoreTracker.RandomizeWord();
             }
         }
 
@@ -177,5 +185,15 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    public string PlayerProgressString()
+    {
+        string result = "";
+        result += "Player " + playerNumber + "\n";
+        result += "Score: " + currentScore + "\n";
+        result += "Progress: " + currentWord + "\n";
+
+        return result;
     }
 }
