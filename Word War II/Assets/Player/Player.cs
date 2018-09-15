@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
             {
                 GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
                 //Debug.Log("Applied " + forceInterval);
-                GetComponent<Rigidbody>().AddForce(transform.forward * 5);
+                GetComponent<Rigidbody>().AddForce(transform.forward * 50);
                 jumpSteps++;
             }
 
@@ -183,9 +183,10 @@ public class Player : MonoBehaviour
         //Handle powerup collisions
         else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Powerup"))
         {
+            Debug.Log("collided with powerup");
             currentColliders.Remove(collision.gameObject);
 
-            PowerUp powerUpComponent = collision.collider.gameObject.transform.parent.GetComponent<PowerUp>();
+            PowerUp powerUpComponent = collision.collider.gameObject.GetComponentInParent<PowerUp>();
 
             powerUpComponent.owner = this;
             activePowerups.Add(powerUpComponent);

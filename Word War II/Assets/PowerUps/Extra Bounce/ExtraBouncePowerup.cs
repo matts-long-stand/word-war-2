@@ -11,7 +11,7 @@ namespace Assets.PowerUps
     {
         void Start()
         {
-            GetComponentInChildren<Rigidbody>().AddTorque(transform.forward * 100);
+            GetComponentInChildren<Rigidbody>().AddTorque(transform.up * 100);
         }
 
         public override void ApplyPowerUp()
