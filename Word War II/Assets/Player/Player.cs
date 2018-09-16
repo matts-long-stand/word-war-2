@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
 
     public PlayerSpawner playerSpawner = null;
 
+    private Color keyColor;
+
     // Use this for initialization
     void Start()
     {
@@ -148,6 +150,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         currentColliders.Remove(collision.gameObject);
+        collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", keyColor);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -163,7 +166,8 @@ public class Player : MonoBehaviour
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
             //Light up the key
-            collision.collider.gameObject.GetComponent<Material>().SetColor("_EmissionColor", new Color(0.2f, 0.5f, 0.8f));
+            keyColor = collision.collider.gameObject.GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
+            collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
 
             //Check if we got the next letter
             if (scoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0]))
