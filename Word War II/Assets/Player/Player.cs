@@ -150,7 +150,10 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         currentColliders.Remove(collision.gameObject);
-        collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", keyColor);
+        if(collision.collider.gameObject.GetComponent<MeshRenderer>() != null)
+        {
+            collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", keyColor);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -166,8 +169,11 @@ public class Player : MonoBehaviour
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
             //Light up the key
-            keyColor = collision.collider.gameObject.GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
-            collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
+            if(collision.collider.gameObject.GetComponent<MeshRenderer>() != null)
+            {
+                keyColor = collision.collider.gameObject.GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
+                collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
+            }
 
             //Check if we got the next letter
             if (scoreTracker.currentGoal[correctLetters].Equals(collision.gameObject.name.ToLower()[0]))
