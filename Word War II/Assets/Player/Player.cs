@@ -162,6 +162,7 @@ public class Player : MonoBehaviour
         //We only want to handle collision on the keyboard layer (keys)
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
+            scoreTracker.keyPressSound.Play();
             //Light up the key
             collision.collider.gameObject.GetComponent<Material>().SetColor("_EmissionColor", new Color(0.2f, 0.5f, 0.8f));
 
@@ -207,6 +208,7 @@ public class Player : MonoBehaviour
 
         else if (collision.collider.gameObject.tag.Equals("Player"))
         {
+            scoreTracker.bounceSound.Play();
             foreach (PowerUp powerUp in activePowerups)
             {
                 if (powerUp is ExtraBouncePowerup)
@@ -214,6 +216,9 @@ public class Player : MonoBehaviour
                     collision.collider.attachedRigidbody.AddForce(transform.forward * 2500);
                 }
             }
+        } else
+        {
+            scoreTracker.bounceSound.Play();
         }
     }
 

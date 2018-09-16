@@ -1874,6 +1874,8 @@ MonoBehaviour:
   - {fileID: 1881661141}
   currentGoal: word
   powerUpSpawner: {fileID: 1028071639}
+  bounceSound: {fileID: 1638765759}
+  keyPressSound: {fileID: 695619360}
 --- !u!4 &1231277793
 Transform:
   m_ObjectHideFlags: 0

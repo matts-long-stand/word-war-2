@@ -28,6 +28,9 @@ public class ScoreTracker : MonoBehaviour {
 
     System.Random rd = new System.Random();
 
+    public AudioSource bounceSound;
+    public AudioSource keyPressSound;
+
     // Use this for initialization
 	void Start () {
         TextAsset text = Resources.Load<TextAsset>("Words");
