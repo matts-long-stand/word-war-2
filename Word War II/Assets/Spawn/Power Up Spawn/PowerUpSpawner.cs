@@ -27,7 +27,7 @@ public class PowerUpSpawner : MonoBehaviour, ISpawner  {
         if(spawn)
         {
             Spawn();
-            SetupTimer();
+            //SetupTimer();
             spawn = false;
         }
 		if(Input.GetKeyDown(KeyCode.S))
