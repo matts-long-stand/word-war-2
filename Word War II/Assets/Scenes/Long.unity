@@ -585,8 +585,8 @@ MonoBehaviour:
   - {fileID: 1752141365}
   - {fileID: 1881661138}
   spawnLocations:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1169046328}
+  - {fileID: 1846277081}
   spawnStrategy: 0
 --- !u!4 &279652392
 Transform:
@@ -1526,6 +1526,7 @@ MonoBehaviour:
   - {fileID: 1214324127}
   - {fileID: 267193752}
   spawnStrategy: 0
+  spawnInterval: 1400000019000000
 --- !u!4 &1028071640
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,6 +1674,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00470603, y: 0.009999999, z: 0.004476667}
   m_Center: {x: -0.0023530158, y: -0.005, z: 0.002238333}
+--- !u!114 &1169046328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114610631602241632, guid: ca4df103f59f74f4786a73ed23581bd0,
+    type: 2}
+  m_PrefabInternal: {fileID: 2053659647}
+  m_Script: {fileID: 11500000, guid: fddf6f28f37e32a429ecdf2b8448bd38, type: 3}
 --- !u!1 &1196245901 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100008, guid: 7acf8eddee086ab4193f630ed824100e,
@@ -3731,6 +3738,7 @@ MonoBehaviour:
   playerNumber: 1
   frozen: 0
   currentScore: 0
+  playerSpawner: {fileID: 279652391}
 --- !u!54 &1752141369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4045,6 +4053,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00470603, y: 0.009999999, z: 0.0044766683}
   m_Center: {x: -0.0023530158, y: -0.005, z: 0.0022383349}
+--- !u!114 &1846277081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114610631602241632, guid: ca4df103f59f74f4786a73ed23581bd0,
+    type: 2}
+  m_PrefabInternal: {fileID: 104024141}
+  m_Script: {fileID: 11500000, guid: fddf6f28f37e32a429ecdf2b8448bd38, type: 3}
 --- !u!1 &1875948716
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,6 +4279,7 @@ MonoBehaviour:
   playerNumber: 2
   frozen: 0
   currentScore: 0
+  playerSpawner: {fileID: 279652391}
 --- !u!54 &1881661142
 Rigidbody:
   m_ObjectHideFlags: 0

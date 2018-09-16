@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     int correctLetters = 0;
     public int currentScore = 0;
 
+    public PlayerSpawner playerSpawner = null;
+
     // Use this for initialization
     void Start()
     {
@@ -55,6 +57,9 @@ public class Player : MonoBehaviour
 
             //Handle player movement based off of input
             HandleMovement();
+
+            //Check for out of bounds
+            CheckOutOfBounds();
         }
 
         EnableHalo();
@@ -222,5 +227,13 @@ public class Player : MonoBehaviour
         result += "Progress: " + currentWord + "\n";
 
         return result;
+    }
+
+    private void CheckOutOfBounds()
+    {
+        if(transform.position.y < -10)
+        {
+            playerSpawner.Spawn(playerNumber);
+        }
     }
 }

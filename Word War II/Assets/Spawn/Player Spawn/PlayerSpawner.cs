@@ -40,7 +40,7 @@ public class PlayerSpawner : MonoBehaviour {
         System.Random random = new System.Random(System.DateTime.Now.Millisecond);
         int randomLocation = random.Next(0, spawnLocations.Length);
         Vector3 newPosition = spawnLocations[randomLocation].transform.position;
-        newPosition.y += 10;
+        newPosition.y += 5;
         playersToSpawn[playerNumber - 1].GetComponentInChildren<Player>().transform.position = newPosition;
     }
 
