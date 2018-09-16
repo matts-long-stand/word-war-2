@@ -1373,6 +1373,7 @@ GameObject:
   - component: {fileID: 975460447}
   - component: {fileID: 975460446}
   - component: {fileID: 975460445}
+  - component: {fileID: 975460448}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1440,6 +1441,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 32.856003, y: 0, z: 0}
+--- !u!45 &975460448
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 975460444}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: b707ba2cd1e26f340a63bf2df4d16520, type: 2}
 --- !u!1 &994647309 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100150, guid: 7acf8eddee086ab4193f630ed824100e,
@@ -1740,6 +1749,7 @@ MonoBehaviour:
   - {fileID: 1752141368}
   - {fileID: 1881661141}
   currentGoal: word
+  powerUpSpawner: {fileID: 1028071639}
 --- !u!4 &1231277793
 Transform:
   m_ObjectHideFlags: 0
@@ -2890,6 +2900,14 @@ Prefab:
     - target: {fileID: 100172, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 400182, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0038
+      objectReference: {fileID: 0}
+    - target: {fileID: 400182, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}

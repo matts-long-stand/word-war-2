@@ -24,6 +24,8 @@ public class ScoreTracker : MonoBehaviour {
     List<string> dictionary = new List<string>();
     public string currentGoal = "word";
 
+    public PowerUpSpawner powerUpSpawner = null;
+
     System.Random rd = new System.Random();
 
     // Use this for initialization
@@ -51,6 +53,11 @@ public class ScoreTracker : MonoBehaviour {
     {
         int wordIndex = rd.Next(dictionary.Count);
         currentGoal = dictionary[wordIndex];
+
+        foreach (Player eachPlayer in players)
+        {
+            eachPlayer.ResetProgress();
+        }
     }
 
     // Update is called once per frame
@@ -71,6 +78,7 @@ public class ScoreTracker : MonoBehaviour {
                 }
 
                 started = true;
+                powerUpSpawner.SetupTimer();
             }
         }
         else
@@ -107,5 +115,11 @@ public class ScoreTracker : MonoBehaviour {
 
         winScreen.text = winner + " won!\nPress any key to restart game";
         winScreen.gameObject.SetActive(true);
+
+        for(int i = 0; i < 100; i++)
+        {
+            powerUpSpawner.Spawn();
+        }
+
     }
 }

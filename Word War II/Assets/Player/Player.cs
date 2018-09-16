@@ -214,6 +214,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ResetProgress()
+    {
+        currentWord = "";
+        correctLetters = 0;
+    }
+
     public void RemovePowerUp(PowerUp powerUp)
     {
         activePowerups.Remove(powerUp);

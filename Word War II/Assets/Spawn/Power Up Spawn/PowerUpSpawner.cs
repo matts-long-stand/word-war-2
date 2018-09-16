@@ -15,10 +15,11 @@ public class PowerUpSpawner : MonoBehaviour, ISpawner  {
     public int[] spawnInterval;
     private Timer powerUpTimer = null;
     private static bool spawn = false;
+    private System.Random random = null;
 
 	// Use this for initialization
 	void Start () {
-        SetupTimer();
+        random = new System.Random(System.DateTime.Now.Millisecond);
 	}
 	
 	// Update is called once per frame
@@ -47,14 +48,13 @@ public class PowerUpSpawner : MonoBehaviour, ISpawner  {
 
     private void SpawnRandom()
     {
-        System.Random random = new System.Random(System.DateTime.Now.Millisecond);
         int randomLocation = random.Next(0, spawnLocations.Length);
         int randomPowerUp = random.Next(0, powerUpTypes.Length);
         PowerUp powerup = Instantiate(powerUpTypes[randomPowerUp]);
         powerup.transform.position = spawnLocations[randomLocation].transform.position;
     }
 
-    private void SetupTimer()
+    public void SetupTimer()
     {
         System.Random random = new System.Random(System.DateTime.Now.Millisecond);
         int spawnTime = random.Next(spawnInterval[0], spawnInterval[1]);
