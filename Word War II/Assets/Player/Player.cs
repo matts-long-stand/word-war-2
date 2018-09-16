@@ -222,6 +222,7 @@ public class Player : MonoBehaviour
             }
         } else
         {
+            Debug.Log("Collided with " + collision.collider.gameObject.name);
             scoreTracker.bounceSound.Play();
         }
     }
