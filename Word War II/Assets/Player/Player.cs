@@ -228,8 +228,20 @@ public class Player : MonoBehaviour
             }
         } else
         {
+            bool onKey = false;
+            foreach (GameObject collider in currentColliders)
+            {
+                if (collider.layer == LayerMask.NameToLayer("Keyboard"))
+                {
+                    onKey = true;
+                    break;
+                }
+            }
             Debug.Log("Collided with " + collision.collider.gameObject.name);
-            scoreTracker.bounceSound.Play();
+            if (!onKey)
+            {
+                scoreTracker.bounceSound.Play();
+            }
         }
     }
 

@@ -1071,7 +1071,8 @@ AudioSource:
   m_GameObject: {fileID: 695619359}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243398215604746106, guid: 0f989ff02d1d8cb48a08bdde9822bfef,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 16133c140f83fee49a47b7c4ea8115f1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3383,6 +3384,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f2bfc68eb90d28141aa798971fa4819b, type: 2}
+    - target: {fileID: 400174, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0012
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7acf8eddee086ab4193f630ed824100e, type: 3}
   m_IsPrefabAsset: 0
@@ -4173,7 +4178,8 @@ AudioSource:
   m_GameObject: {fileID: 1638765758}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243744014350005062, guid: 0f989ff02d1d8cb48a08bdde9822bfef,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 0c57078d16dcf5a44969fbce288c604f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4182,7 +4188,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 118
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
