@@ -31,8 +31,25 @@ public class ScoreTracker : MonoBehaviour {
     public AudioSource bounceSound;
     public AudioSource keyPressSound;
 
+    public GameObject KeysParent;
+    public GameObject KeyLightsParent;
+    [HideInInspector] public List<GameObject> Keys;
+    [HideInInspector] public List<GameObject> KeyLights;
+
+
     // Use this for initialization
 	void Start () {
+
+        for (int i = 0; i < KeysParent.transform.childCount; i++)
+        {
+            Keys.Add(KeysParent.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < KeyLightsParent.transform.childCount; i++)
+        {
+            KeyLights.Add(KeyLightsParent.transform.GetChild(i).gameObject);
+        }
+
         TextAsset text = Resources.Load<TextAsset>("Words");
         dictionary.AddRange(text.ToString().Split(null));
         Debug.Log("dictionary has " + dictionary.Count);

@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        currentWord = "";
+        correctLetters = 0;
         foreach (string s in Input.GetJoystickNames())
         {
             Debug.Log(s);
@@ -134,7 +136,7 @@ public class Player : MonoBehaviour
             {
                 GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
                 //Debug.Log("Applied " + forceInterval);
-                GetComponent<Rigidbody>().AddForce(transform.forward * 50);
+                GetComponent<Rigidbody>().AddForce(transform.forward * 40);
                 jumpSteps++;
             }
 
@@ -149,10 +151,17 @@ public class Player : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
+        ScoreTracker scoreTracker = FindObjectOfType<ScoreTracker>();
+
         currentColliders.Remove(collision.gameObject);
-        if(collision.collider.gameObject.GetComponent<MeshRenderer>() != null)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
-            collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", keyColor);
+            if (collision.collider.gameObject.GetComponent<MeshRenderer>() != null)
+            {
+                //collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", keyColor);
+                int keyIndex = scoreTracker.Keys.IndexOf(collision.collider.gameObject);
+                scoreTracker.KeyLights[keyIndex].GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(514f, 457.7882f, 0.0f));
+            }
         }
     }
 
@@ -172,8 +181,11 @@ public class Player : MonoBehaviour
             //Light up the key
             if(collision.collider.gameObject.GetComponent<MeshRenderer>() != null)
             {
-                keyColor = collision.collider.gameObject.GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
-                collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
+                //keyColor = collision.collider.gameObject.GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
+                //collision.collider.gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
+                int keyIndex = scoreTracker.Keys.IndexOf(collision.collider.gameObject);
+                Debug.Log("key index is " + keyIndex);
+                scoreTracker.KeyLights[keyIndex].GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1.0f, 0.0f, 0.0f));
             }
 
             //Check if we got the next letter
