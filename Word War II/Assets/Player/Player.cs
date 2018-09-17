@@ -35,9 +35,11 @@ public class Player : MonoBehaviour
 
     private Color keyColor;
 
+    ScoreTracker scoreTracker = null;
     // Use this for initialization
     void Start()
     {
+        scoreTracker = FindObjectOfType<ScoreTracker>();
         currentWord = "";
         correctLetters = 0;
         foreach (string s in Input.GetJoystickNames())
@@ -54,8 +56,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!frozen)
+        if (scoreTracker.isReceivingInput())
         {
+            Debug.Log("Receive input is true");
             //Handle any player input
             HandleInput();
 
@@ -64,6 +67,9 @@ public class Player : MonoBehaviour
 
             //Check for out of bounds
             CheckOutOfBounds();
+        } else
+        {
+            Debug.Log("Input is not working");
         }
 
         EnableHalo();
@@ -121,38 +127,40 @@ public class Player : MonoBehaviour
             transform.localRotation = Quaternion.Euler(new Vector3(0, rotation, 0));
         }
 
-        //Handle player jumping
-        Vector3 velocity = GetComponent<Rigidbody>().velocity;
-        if (Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
-        {
-            if ((jumpSteps == 0) && (currentColliders.Count > 0))
-            {
-                GetComponent<Rigidbody>().AddForce(new Vector3(0, initialForce, 0));
-                //Debug.Log("Applied " + initialForce);
-                GetComponent<Rigidbody>().AddForce(transform.forward * 50);
-                jumpSteps++;
-            }
-            else if ((jumpSteps > 0) && (jumpSteps < maxJumpSteps) && (currentColliders.Count == 0))
-            {
-                GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
-                //Debug.Log("Applied " + forceInterval);
-                GetComponent<Rigidbody>().AddForce(transform.forward * 40);
-                jumpSteps++;
-            }
 
-            //if (transform.localPosition.y <= (GetComponent<MeshRenderer>().bounds.extents.y/2))
-        }
-        else
+        if (!frozen)
         {
-            jumpSteps = 0;
-        }
+            //Handle player jumping
+            Vector3 velocity = GetComponent<Rigidbody>().velocity;
 
+            if (Input.GetAxis("Jump_P" + playerNumber.ToString()) > 0)
+            {
+                if ((jumpSteps == 0) && (currentColliders.Count > 0))
+                {
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, initialForce, 0));
+                    //Debug.Log("Applied " + initialForce);
+                    GetComponent<Rigidbody>().AddForce(transform.forward * 50);
+                    jumpSteps++;
+                }
+                else if ((jumpSteps > 0) && (jumpSteps < maxJumpSteps) && (currentColliders.Count == 0))
+                {
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, forceInterval, 0));
+                    //Debug.Log("Applied " + forceInterval);
+                    GetComponent<Rigidbody>().AddForce(transform.forward * 40);
+                    jumpSteps++;
+                }
+
+                //if (transform.localPosition.y <= (GetComponent<MeshRenderer>().bounds.extents.y/2))
+            }
+            else
+            {
+                jumpSteps = 0;
+            }
+        }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        ScoreTracker scoreTracker = FindObjectOfType<ScoreTracker>();
-
         currentColliders.Remove(collision.gameObject);
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Keyboard"))
         {
@@ -167,8 +175,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        ScoreTracker scoreTracker = FindObjectOfType<ScoreTracker>();
-
         if (!currentColliders.Contains(collision.gameObject))
         {
             currentColliders.Add(collision.gameObject);

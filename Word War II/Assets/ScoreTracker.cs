@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class ScoreTracker : MonoBehaviour {
     public TextMeshProUGUI instructions;
     public TextMeshProUGUI goal;
     public TextMeshProUGUI[] playerProgress;
+    bool receiveInput = false;
 
     //When a winner is decided
     public TextMeshProUGUI winScreen;
@@ -16,7 +18,7 @@ public class ScoreTracker : MonoBehaviour {
     bool started = false;
 
     [System.NonSerialized]
-    public int winScore = 2;
+    public int winScore = 1;
 
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
@@ -36,10 +38,14 @@ public class ScoreTracker : MonoBehaviour {
     [HideInInspector] public List<GameObject> Keys;
     [HideInInspector] public List<GameObject> KeyLights;
 
+    public bool isReceivingInput()
+    {
+        return receiveInput;
+    }
 
     // Use this for initialization
 	void Start () {
-
+        receiveInput = true;
         for (int i = 0; i < KeysParent.transform.childCount; i++)
         {
             Keys.Add(KeysParent.transform.GetChild(i).gameObject);
@@ -113,11 +119,13 @@ public class ScoreTracker : MonoBehaviour {
                 }
             } else
             {
-                if (Input.anyKeyDown)
+                if (receiveInput)
                 {
-                    SceneManager.LoadScene("Long");
+                    if (Input.anyKeyDown)
+                    {
+                        SceneManager.LoadScene("Long");
+                    }
                 }
-
             }
         }
         //Display.text = result;
@@ -133,7 +141,7 @@ public class ScoreTracker : MonoBehaviour {
             eachProgress.gameObject.SetActive(false);
         }
 
-        winScreen.text = winner + " won!\nPress any key to restart game";
+        winScreen.text = winner + " won!\n";
         winScreen.gameObject.SetActive(true);
 
         for(int i = 0; i < 100; i++)
@@ -141,5 +149,23 @@ public class ScoreTracker : MonoBehaviour {
             powerUpSpawner.Spawn();
         }
 
+        StartCoroutine(FreezeInput());
+        FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+    }
+
+    IEnumerator FreezeInput()
+    {
+        float startTime = Time.realtimeSinceStartup;
+        float duration = 0;
+        receiveInput = false;
+        while (duration < 3f)
+        {
+            Debug.Log("event system is inactive");
+            duration = Time.realtimeSinceStartup - startTime;
+            yield return null;
+        }
+
+        winScreen.text += "Press any key to restart game";
+        receiveInput = true;
     }
 }
