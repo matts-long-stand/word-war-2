@@ -32,6 +32,8 @@ public class ScoreTracker : MonoBehaviour {
 
     public AudioSource bounceSound;
     public AudioSource keyPressSound;
+    public AudioSource winSound;
+    public AudioSource powerupSound;
 
     public GameObject KeysParent;
     public GameObject KeyLightsParent;
@@ -143,6 +145,8 @@ public class ScoreTracker : MonoBehaviour {
 
         winScreen.text = winner + " won!\n";
         winScreen.gameObject.SetActive(true);
+
+        winSound.Play();
 
         for(int i = 0; i < 100; i++)
         {

@@ -17,6 +17,6 @@ public class PowerUp : MonoBehaviour {
 
     public virtual void ApplyPowerUp()
     {
-
+        FindObjectOfType<ScoreTracker>().powerupSound.Play();
     }
 }

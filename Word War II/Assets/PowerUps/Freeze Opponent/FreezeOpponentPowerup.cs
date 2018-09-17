@@ -18,6 +18,7 @@ namespace Assets.PowerUps
 
         public override void ApplyPowerUp()
         {
+            base.ApplyPowerUp();
             startTime = Time.realtimeSinceStartup;
 
             players = FindObjectsOfType<Player>();
