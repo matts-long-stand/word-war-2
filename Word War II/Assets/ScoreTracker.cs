@@ -18,7 +18,7 @@ public class ScoreTracker : MonoBehaviour {
     bool started = false;
 
     [System.NonSerialized]
-    public int winScore = 1;
+    public int winScore = 3;
 
     [System.NonSerialized]
     List<string> playerColors = new List<string>() { "red", "green", "blue", "yellow" };
